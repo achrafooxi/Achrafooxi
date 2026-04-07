@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>achrafooxi</title>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+      padding-top: 100px;
+    }
+
+    h1 {
+      font-size: 40px;
+      color: #00ffcc;
+      animation: fadeIn 2s ease;
+    }
+
+    .typing {
+      font-size: 18px;
+      color: #aaa;
+      margin-top: 10px;
+    }
+
+    .btn {
+      margin-top: 20px;
+      display: inline-block;
+      padding: 12px 25px;
+      background: #00ffcc;
+      color: black;
+      border-radius: 25px;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(-20px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="stars"></canvas>
+
+<div class="content">
+  <h1>🚀 achrafooxi</h1>
+  <div class="typing" id="text"></div>
+
+  <a href="https://instagram.com/achrafooxi" target="_blank" class="btn">
+    📸 Seguimi
+  </a>
+</div>
+
+<script>
+  // ⭐ Stars animation
+  const canvas = document.getElementById("stars");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let stars = [];
+
+  for (let i = 0; i < 100; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 2
+    });
+  }
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "white";
+    stars.forEach(s => {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+      ctx.fill();
+      s.y += 0.5;
+      if (s.y > canvas.height) s.y = 0;
+    });
+    requestAnimationFrame(drawStars);
+  }
+
+  drawStars();
+
+  // ⌨️ Typing effect
+  const text = "Sto costruendo il mio futuro digitale... 🔥";
+  let i = 0;
+
+  function typing() {
+    if (i < text.length) {
+      document.getElementById("text").innerHTML += text.charAt(i);
+      i++;
+      setTimeout(typing, 50);
+    }
+  }
+
+  typing();
+</script>
+
+</body>
+</html>
+<!DOCTYPE html>
+<html>
+<head>
+  <title>achrafooxi - Game Hub</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      text-align: center;
+      font-family: Arial;
+    }
+
+    h1 {
+      color: #00ffcc;
+      margin-top: 30px;
+    }
+
+    .btn {
+      display: inline-block;
+      margin: 10px;
+      padding: 10px 20px;
+      background: #00ffcc;
+      color: black;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      transform: scale(1.1);
+    }
+
+    #gameBox {
+      margin-top: 20px;
+      display: none;
+    }
+
+    iframe {
+      width: 95%;
+      height: 500px;
+      border: none;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🎮 Game Hub - achrafooxi</h1>
+
+  <div>
+    <div class="btn" onclick="openGame('snake')">🐍 Snake</div>
+    <div class="btn" onclick="openGame('tetris')">🧠 Tetris</div>
+    <div class="btn" onclick="openGame('car')">🚗 Car Game</div>
+    <div class="btn" onclick="closeGame()">❌ Chiudi</div>
+  </div>
+
+  <div id="gameBox">
+    <iframe id="gameFrame"></iframe>
+  </div>
+
+  <script>
+    function openGame(game) {
+      let url = "";
+
+      if (game === "snake") {
+        url = "https://playsnake.org/";
+      } else if (game === "tetris") {
+        url = "https://www.mathsisfun.com/games/tetris.html";
+      } else if (game === "car") {
+        url = "https://www.onlinegames.io/games/2021/2/traffic-run/index.html";
+      }
+
+      document.getElementById("gameFrame").src = url;
+      document.getElementById("gameBox").style.display = "block";
+    }
+
+    function closeGame() {
+      document.getElementById("gameBox").style.display = "none";
+      document.getElementById("gameFrame").src = "";
+    }
+  </script>
+
+</body>
+</html>
