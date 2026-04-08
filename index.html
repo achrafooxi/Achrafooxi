@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ita Pizza</title>
+
+  <style>
+    body {
+      margin: 0;
+      background: black;
+      color: white;
+      font-family: Arial;
+      text-align: center;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+
+    h1 {
+      margin-top: 40px;
+      font-size: 45px;
+      color: #ffcc00;
+      position: relative;
+      z-index: 1;
+    }
+
+    .pizza {
+      background: rgba(255,255,255,0.1);
+      margin: 10px auto;
+      padding: 10px;
+      width: 90%;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .pizza:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    .order {
+      margin-top: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    button {
+      padding: 10px 20px;
+      border-radius: 20px;
+      border: none;
+      background: #00ffcc;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<canvas id="pizzaCanvas"></canvas>
+
+<h1>🍕 Benvenuti in Ita Pizza 🍕</h1>
+
+<div class="pizza" onclick="selectPizza('Margherita - 5.50€')">
+Margherita - 5.50€<br>Pomodoro, mozzarella
+</div>
+
+<div class="pizza" onclick="selectPizza('Diavola - 7.00€')">
+Diavola - 7.00€<br>Salame piccante
+</div>
+
+<div class="pizza" onclick="selectPizza('Americana - 7.00€')">
+Americana - 7.00€<br>Patatine
+</div>
+
+<div class="pizza" onclick="selectPizza('Tonno e Cipolla - 7.50€')">
+Tonno e Cipolla - 7.50€
+</div>
+
+<div class="order">
+  <h2>🛒 Il tuo ordine:</h2>
+  <p id="orderText">Nessuna pizza selezionata</p>
+
+  <button onclick="sendOrder()">Ordina su WhatsApp</button>
+</div>
+
+<script>
+let selected = "";
+
+function selectPizza(name) {
+  selected = name;
+  document.getElementById("orderText").innerText = name;
+}
+
+function sendOrder() {
+  if (selected === "") {
+    alert("Scegli una pizza!");
+  } else {
+    let numero = "393882558000"; // ✅ رقمك
+    let messaggio = "Ciao, voglio ordinare: " + selected;
+    let url = "https://wa.me/" + numero + "?text=" + encodeURIComponent(messaggio);
+    window.open(url, "_blank");
+  }
+}
+
+// 🍕 Animation
+const canvas = document.getElementById("pizzaCanvas");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let pizzas = [];
+
+for (let i = 0; i < 20; i++) {
+  pizzas.push({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height,
+    size: Math.random() * 20 + 10,
+    speed: Math.random() + 0.5
+  });
+}
+
+function drawPizza(x, y, size) {
+  ctx.beginPath();
+  ctx.arc(x, y, size, 0, Math.PI * 2);
+  ctx.fillStyle = "#f5c16c";
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(x, y, size - 5, 0, Math.PI * 2);
+  ctx.fillStyle = "#e63946";
+  ctx.fill();
+}
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  pizzas.forEach(p => {
+    drawPizza(p.x, p.y, p.size);
+    p.y += p.speed;
+
+    if (p.y > canvas.height) {
+      p.y = 0;
+      p.x = Math.random() * canvas.width;
+    }
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
