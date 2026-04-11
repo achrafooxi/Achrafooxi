@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza App</title>
+
+<style>
+body{background:#111;color:white;font-family:Arial;margin:0}
+.card{background:#222;margin:10px;padding:10px;border-radius:10px}
+button{background:red;color:white;border:none;padding:5px 10px}
+.cart{position:fixed;bottom:0;background:black;width:100%;padding:10px}
+</style>
+</head>
+
+<body>
+
+<h2 style="text-align:center">🍕 Pizza App</h2>
+
+<div class="card">
+Margherita - €5.5<br>
+
+Size:
+<select id="size0">
+<option value="1">S</option>
+<option value="1.2">M</option>
+<option value="1.5">L</option>
+</select><br>
+
+<input type="checkbox" id="cheese0"> Extra cheese +1€
+
+<br><br>
+
+<button onclick="add(0)">+</button>
+<span id="q0">0</span>
+<button onclick="remove(0)">-</button>
+
+</div>
+
+<div class="cart">
+<div id="cart"></div>
+Total €<span id="total">0</span><br>
+<button onclick="send()">Order</button>
+</div>
+
+<script>
+let price=5.5;
+let q=0;
+
+function calc(){
+ let size=document.getElementById("size0").value;
+ let total=price*size;
+ if(document.getElementById("cheese0").checked) total+=1;
+ return total;
+}
+
+function add(){
+ q++;
+ update();
+}
+
+function remove(){
+ if(q>0) q--;
+ update();
+}
+
+function update(){
+ document.getElementById("q0").innerText=q;
+ let total=calc()*q;
+ document.getElementById("total").innerText=total.toFixed(2);
+
+ document.getElementById("cart").innerText="Margherita x"+q;
+}
+
+function send(){
+ window.open("https://wa.me/393882558000?text=Order pizza");
+}
+</script>
+
+</body>
+</html>
