@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ita Pizza</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:black;
+  color:white;
+}
+
+/* خلفية */
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  z-index:0;
+}
+
+.container{
+  position:relative;
+  z-index:1;
+  padding:15px;
+}
+
+h1{
+  text-align:center;
+  color:#ffcc00;
+}
+
+.section{
+  margin:20px 0;
+}
+
+.section h2{
+  border-bottom:2px solid red;
+}
+
+.item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:rgba(255,255,255,0.1);
+  margin:8px 0;
+  padding:10px;
+  border-radius:10px;
+}
+
+.item:hover{
+  background:rgba(255,255,255,0.2);
+}
+
+.price{
+  background:red;
+  padding:5px 10px;
+  border-radius:15px;
+}
+
+button{
+  background:#00ffcc;
+  border:none;
+  padding:5px 10px;
+  border-radius:10px;
+}
+
+/* السلة */
+.cart{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#111;
+  padding:10px;
+  border-top:2px solid red;
+  z-index:2;
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="container">
+
+<h1>🍕 Ita Pizza 🍕</h1>
+
+<!-- CLASSICHE -->
+<div class="section">
+<h2>CLASSICHE</h2>
+
+<div class="item">Margherita <div><span class="price">5.50€</span><button onclick="add('Margherita',5.5)">+</button></div></div>
+<div class="item">Marinara <div><span class="price">4.50€</span><button onclick="add('Marinara',4.5)">+</button></div></div>
+<div class="item">Capricciosa <div><span class="price">8.00€</span><button onclick="add('Capricciosa',8)">+</button></div></div>
+<div class="item">Napoli <div><span class="price">7.00€</span><button onclick="add('Napoli',7)">+</button></div></div>
+<div class="item">Romana <div><span class="price">6.50€</span><button onclick="add('Romana',6.5)">+</button></div></div>
+<div class="item">Diavola <div><span class="price">7.00€</span><button onclick="add('Diavola',7)">+</button></div></div>
+<div class="item">Quattro Formaggi <div><span class="price">8.00€</span><button onclick="add('4 Formaggi',8)">+</button></div></div>
+<div class="item">Americana <div><span class="price">7.00€</span><button onclick="add('Americana',7)">+</button></div></div>
+<div class="item">Tonno e Cipolla <div><span class="price">7.50€</span><button onclick="add('Tonno Cipolla',7.5)">+</button></div></div>
+
+</div>
+
+<!-- SPECIAL -->
+<div class="section">
+<h2>SPECIAL</h2>
+
+<div class="item">Mix Funghi <div><span class="price">8.50€</span><button onclick="add('Mix Funghi',8.5)">+</button></div></div>
+<div class="item">Zucchine e Gamberi <div><span class="price">8.50€</span><button onclick="add('Zucchine Gamberi',8.5)">+</button></div></div>
+<div class="item">Crudo <div><span class="price">9.00€</span><button onclick="add('Crudo',9)">+</button></div></div>
+<div class="item">Boscaiola <div><span class="price">10.50€</span><button onclick="add('Boscaiola',10.5)">+</button></div></div>
+<div class="item">Mediterranea <div><span class="price">15.00€</span><button onclick="add('Mediterranea',15)">+</button></div></div>
+
+</div>
+
+<!-- BIANCHE -->
+<div class="section">
+<h2>BIANCHE</h2>
+
+<div class="item">Noci Pera <div><span class="price">8.50€</span><button onclick="add('Noci Pera',8.5)">+</button></div></div>
+<div class="item">Ligure <div><span class="price">7.50€</span><button onclick="add('Ligure',7.5)">+</button></div></div>
+<div class="item">Pavese <div><span class="price">9.00€</span><button onclick="add('Pavese',9)">+</button></div></div>
+
+</div>
+
+<!-- CALZONI -->
+<div class="section">
+<h2>CALZONI</h2>
+
+<div class="item">Calzone Normale <div><span class="price">6.50€</span><button onclick="add('Calzone',6.5)">+</button></div></div>
+<div class="item">Calzone Farcito <div><span class="price">8.00€</span><button onclick="add('Calzone Farcito',8)">+</button></div></div>
+
+</div>
+
+<!-- KEBAB -->
+<div class="section">
+<h2>KEBAB</h2>
+
+<div class="item">Panino Kebab <div><span class="price">6.00€</span><button onclick="add('Panino Kebab',6)">+</button></div></div>
+<div class="item">Piatto Kebab <div><span class="price">8.50€</span><button onclick="add('Piatto Kebab',8.5)">+</button></div></div>
+
+</div>
+
+</div>
+
+<!-- 🛒 السلة -->
+<div class="cart">
+<div id="cart"></div>
+<b>Totale: €<span id="total">0</span></b><br><br>
+<button onclick="send()">📲 Ordina WhatsApp</button>
+</div>
+
+<script>
+let cart=[];
+
+function add(name,price){
+  cart.push({name,price});
+  render();
+}
+
+function render(){
+  let html="";
+  let total=0;
+
+  cart.forEach(i=>{
+    html+= i.name+" - €"+i.price+"<br>";
+    total+=i.price;
+  });
+
+  document.getElementById("cart").innerHTML=html;
+  document.getElementById("total").innerText=total.toFixed(2);
+}
+
+function send(){
+  let msg="Ordine:%0A";
+  cart.forEach(i=>{
+    msg+=i.name+" - €"+i.price+"%0A";
+  });
+
+  window.open("https://wa.me/393882558000?text="+msg);
+}
+
+/* 🍕 خلفية متحركة */
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let pizzas=[];
+
+for(let i=0;i<30;i++){
+  pizzas.push({
+    x:Math.random()*canvas.width,
+    y:Math.random()*canvas.height,
+    size:Math.random()*20+10,
+    speed:Math.random()+0.5
+  });
+}
+
+function drawPizza(x,y,size){
+  ctx.beginPath();
+  ctx.arc(x,y,size,0,Math.PI*2);
+  ctx.fillStyle="#f5c16c";
+  ctx.fill();
+
+  ctx.beginPath();
+  ctx.arc(x,y,size-5,0,Math.PI*2);
+  ctx.fillStyle="#e63946";
+  ctx.fill();
+}
+
+function animate(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  pizzas.forEach(p=>{
+    drawPizza(p.x,p.y,p.size);
+    p.y+=p.speed;
+
+    if(p.y>canvas.height){
+      p.y=0;
+      p.x=Math.random()*canvas.width;
+    }
+  });
+
+  requestAnimationFrame(animate);
+}
+
+animate();
+</script>
+
+</body>
+</html>
