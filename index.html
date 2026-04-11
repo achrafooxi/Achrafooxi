@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Menu Pizzeria</title>
+  <style>
+    * { box-sizing: border-box; }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background:#0b0b0b;
+      color:#fff;
+    }
+
+    .wrap{
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 24px;
+    }
+
+    .title{
+      text-align:center;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin: 10px 0 30px;
+      text-transform: uppercase;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .section{
+      padding: 18px 16px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 18px;
+      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
+      box-shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+
+    .section h2{
+      margin: 0 0 14px;
+      font-size: 24px;
+      text-align:center;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .item{
+      display:flex;
+      justify-content: space-between;
+      align-items:flex-start;
+      gap: 16px;
+      padding: 10px 0;
+      border-bottom: 1px dashed rgba(255,255,255,.12);
+    }
+
+    .item:last-child{ border-bottom:none; }
+
+    .name{
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.25;
+      flex: 1;
+    }
+
+    .desc{
+      display:block;
+      font-size: 12px;
+      color: rgba(255,255,255,.72);
+      font-weight: 400;
+      margin-top: 4px;
+    }
+
+    .price{
+      min-width: 76px;
+      text-align:center;
+      background: #e11212;
+      color:#fff;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-weight: 800;
+      font-size: 15px;
+      box-shadow: 0 0 0 2px rgba(255,255,255,.08) inset;
+      white-space: nowrap;
+    }
+
+    .full{
+      grid-column: 1 / -1;
+    }
+
+    .two{
+      grid-column: span 2;
+    }
+
+    .small-note{
+      margin-top: 18px;
+      text-align:center;
+      color: rgba(255,255,255,.65);
+      font-size: 13px;
+    }
+
+    @media (max-width: 1000px){
+      .grid{ grid-template-columns: 1fr 1fr; }
+      .two{ grid-column: span 2; }
+    }
+
+    @media (max-width: 700px){
+      .wrap{ padding: 14px; }
+      .grid{ grid-template-columns: 1fr; }
+      .two, .full{ grid-column: auto; }
+      .title{ font-size: 26px; }
+      .section h2{ font-size: 20px; }
+      .name{ font-size: 15px; }
+      .price{ min-width: 70px; font-size: 14px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="title">Menu Pizzeria</div>
+
+    <div class="grid">
+
+      <div class="section">
+        <h2>Classiche</h2>
+
+        <div class="item">
+          <div class="name">1. Margherita <span class="desc">pomodoro, mozzarella (fior di latte)</span></div>
+          <div class="price">5,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">2. Marinara <span class="desc">pomodoro, aglio, olio extravergine d’oliva, origano</span></div>
+          <div class="price">4,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">3. Quattro Stagioni <span class="desc">pom., moz., p. cotto, funghi, carciofi, olive</span></div>
+          <div class="price">8,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">4. Capricciosa <span class="desc">pom., moz., acciughe, carciofi, funghi, olive, origano</span></div>
+          <div class="price">8,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">5. Napoli <span class="desc">pom., moz., acciughe, capperi, olive, origano</span></div>
+          <div class="price">7,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">6. Romana <span class="desc">pom., moz., acciughe, origano</span></div>
+          <div class="price">6,50</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Special</h2>
+
+        <div class="item">
+          <div class="name">22. Mix Funghi <span class="desc">pom., moz., mix funghi</span></div>
+          <div class="price">8,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">23. Zucchine e Gamberi <span class="desc">pom., moz., zucchine, gamberi</span></div>
+          <div class="price">8,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">24. Crudo <span class="desc">pom., moz., crudo, rucola, scaglie di grana</span></div>
+          <div class="price">9,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">25. Boscaiola <span class="desc">pom., moz., mix funghi, salsiccia</span></div>
+          <div class="price">10,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">26. Mare Terra <span class="desc">pom., moz., verdure grigliate, frutti di mare</span></div>
+          <div class="price">12,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">30. Mediterranea <span class="desc">pom., moz., polpo, olive taggiasche, bufala, ciliegini secchi</span></div>
+          <div class="price">15,00</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Bianche</h2>
+
+        <div class="item">
+          <div class="name">41. Noci Pera <span class="desc">moz., zola, noci, pera</span></div>
+          <div class="price">8,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">42. Ligure <span class="desc">pomodorini, pesto</span></div>
+          <div class="price">7,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">43. Pavese <span class="desc">moz., stracchino, grana, speck</span></div>
+          <div class="price">9,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">44. Arcobaleno <span class="desc">moz., verdure grigliate, olive taggiasche, rucola, pomodorini</span></div>
+          <div class="price">9,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">31. Bufalina <span class="desc">pom., bufala, basilico</span></div>
+          <div class="price">8,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">32. Speck Brie <span class="desc">pom., moz., speck, brie</span></div>
+          <div class="price">8,00</div>
+        </div>
+      </div>
+
+      <div class="section two">
+        <h2>Consigli del Pizzaiolo</h2>
+
+        <div class="item">
+          <div class="name">35. Valtidone <span class="desc">pom., moz., porcini, zola, pancetta</span></div>
+          <div class="price">9,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">36. ITA Pizza <span class="desc">pom. piccanti, moz., bordo di friarielli e ricotta</span></div>
+          <div class="price">10,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">37. Campagna <span class="desc">pom., moz., bufala, crudo, rucola, grana, pomodorini</span></div>
+          <div class="price">10,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">38. Del Pizzaiolo <span class="desc">pom., salsiccia, cipolla, zola</span></div>
+          <div class="price">9,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">39. Completa <span class="desc">pom., moz., p. cotto, funghi, carciofi, olive, wurstel, salame piccante</span></div>
+          <div class="price">9,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">40. Mix Carne <span class="desc">pom., moz., p. cotto, salame dolce, salame piccante, kebab</span></div>
+          <div class="price">10,00</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Focacce / Kebab</h2>
+
+        <div class="item">
+          <div class="name">Focaccia <span class="desc">olio, sale, rosmarino, origano</span></div>
+          <div class="price">4,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Focaccia Ripiena <span class="desc">moz., verdure grigliate, kebab</span></div>
+          <div class="price">12,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Kebab Libro <span class="desc">pom., moz., kebab, salse</span></div>
+          <div class="price">7,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Panino / Piadina <span class="desc">insalata, pomodoro, carne, salse</span></div>
+          <div class="price">6,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Piatto Kebab <span class="desc">insalata, patatine, kebab</span></div>
+          <div class="price">8,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Menu Panino / Piadina <span class="desc">panino o piada + patatine + bibita</span></div>
+          <div class="price">9,00</div>
+        </div>
+      </div>
+
+      <div class="section">
+        <h2>Calzoni</h2>
+
+        <div class="item">
+          <div class="name">Calzone Normale <span class="desc">pom., moz., p. cotto</span></div>
+          <div class="price">6,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Calzone Farcito <span class="desc">pom., moz., p. cotto, funghi, carciofi, wurstel</span></div>
+          <div class="price">8,00</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Calzone Fresco <span class="desc">moz., pomodoro fresco, basilico</span></div>
+          <div class="price">6,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Calzone Kebab <span class="desc">pom., moz., kebab</span></div>
+          <div class="price">8,00</div>
+        </div>
+      </div>
+
+      <div class="section full">
+        <h2>Patatine Fritte</h2>
+
+        <div class="item">
+          <div class="name">Patatine Fritte Piccole</div>
+          <div class="price">2,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Patatine Fritte Medie</div>
+          <div class="price">3,50</div>
+        </div>
+
+        <div class="item">
+          <div class="name">Patatine Fritte Grandi</div>
+          <div class="price">5,00</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="small-note">
+      غيّر الأسماء والأسعار مباشرة من داخل HTML، وكل عنصر جديد انسخه بنفس شكل <code>.item</code>.
+    </div>
+  </div>
+</body>
+</html>
