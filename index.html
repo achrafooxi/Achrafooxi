@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ita Pizza</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  background:#111;
+  color:white;
+}
+
+.header{
+  text-align:center;
+  padding:15px;
+  background:#000;
+  color:#ffcc00;
+}
+
+.inputs{
+  padding:10px;
+}
+input,select{
+  width:100%;
+  margin:5px 0;
+  padding:8px;
+  border-radius:8px;
+  border:none;
+}
+
+.menu{
+  padding:10px;
+}
+
+.item{
+  background:#222;
+  margin:10px 0;
+  padding:10px;
+  border-radius:10px;
+}
+
+button{
+  background:red;
+  color:white;
+  border:none;
+  padding:5px 10px;
+  margin:2px;
+  border-radius:8px;
+}
+
+.cart{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  background:#000;
+  padding:10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">🍕 Ita Pizza</div>
+
+<div class="inputs">
+<input id="name" placeholder="Nome cliente">
+<input id="address" placeholder="Indirizzo">
+<button onclick="gps()">📍 GPS</button>
+
+<select id="time">
+<option>Subito</option>
+<option>30 min</option>
+<option>1 ora</option>
+</select>
+
+<select id="pay">
+<option>Contanti</option>
+<option>Carta</option>
+</select>
+</div>
+
+<div class="menu" id="menu"></div>
+
+<div class="cart">
+<div id="cart"></div>
+Totale €<span id="total">0</span><br>
+<button onclick="send()">📲 Ordina</button>
+</div>
+
+<script>
+
+const pizzas=[
+"Margherita","Marinara","Diavola","Capricciosa",
+"Napoli","Romana","Americana","4 Formaggi",
+"Tonno Cipolla","Boscaiola","Crudo","Mediterranea",
+"Noci Pera","Calzone","Kebab"
+];
+
+const prices=[5.5,4.5,7,8,7,6.5,7,8,7.5,10.5,9,15,8.5,6.5,6];
+
+let cart={};
+
+function render(){
+  let html="";
+  pizzas.forEach((p,i)=>{
+    html+=`
+    <div class="item">
+    <b>${p}</b> - €${prices[i]}<br>
+
+    Size:
+    <select id="s${i}">
+      <option value="1">S</option>
+      <option value="1.2">M</option>
+      <option value="1.5">L</option>
+    </select><br>
+
+    <input type="checkbox" id="c${i}"> Extra cheese +1€<br>
+
+    <button onclick="add(${i})">+</button>
+    <span id="q${i}">0</span>
+    <button onclick="remove(${i})">-</button>
+
+    </div>`;
+  });
+
+  document.getElementById("menu").innerHTML=html;
+}
+
+function calc(i){
+  let base=prices[i];
+  let size=document.getElementById("s"+i).value;
+  let total=base*size;
+
+  if(document.getElementById("c"+i).checked) total+=1;
+
+  return total;
+}
+
+function add(i){
+  if(!cart[i]) cart[i]=0;
+  cart[i]++;
+  update();
+}
+
+function remove(i){
+  if(cart[i]){
+    cart[i]--;
+    if(cart[i]<=0) delete cart[i];
+  }
+  update();
+}
+
+function update(){
+  let total=0;
+  let text="";
+
+  pizzas.forEach((p,i)=>{
+    let q=cart[i]||0;
+    document.getElementById("q"+i).innerText=q;
+
+    if(q>0){
+      let price=calc(i);
+      total+=price*q;
+      text+=p+" x"+q+"<br>";
+    }
+  });
+
+  document.getElementById("cart").innerHTML=text;
+  document.getElementById("total").innerText=total.toFixed(2);
+}
+
+function gps(){
+  navigator.geolocation.getCurrentPosition(pos=>{
+    document.getElementById("address").value=
+    pos.coords.latitude+","+pos.coords.longitude;
+  });
+}
+
+function send(){
+  let name=document.getElementById("name").value;
+  let address=document.getElementById("address").value;
+
+  if(!name || !address){
+    alert("Inserisci nome e indirizzo!");
+    return;
+  }
+
+  let msg="Ordine:%0A";
+  msg+="Nome: "+name+"%0A";
+  msg+="Indirizzo: "+address+"%0A";
+  msg+="Tempo: "+document.getElementById("time").value+"%0A";
+  msg+="Pagamento: "+document.getElementById("pay").value+"%0A%0A";
+
+  pizzas.forEach((p,i)=>{
+    if(cart[i]){
+      msg+=p+" x"+cart[i]+"%0A";
+    }
+  });
+
+  window.open("https://wa.me/393882558000?text="+msg);
+}
+
+render();
+
+</script>
+
+</body>
+</html>
